@@ -43,7 +43,100 @@ echo $contents; } ?>
 
 <!-- end of project description -->
 
-<p> No content added. </p>
+<h2>Outline</h2>
+<p> 
+With the geonames package you can get easy access to the geographic names query service on <a href="http://www.geonames.org">GeoNames</a>.
+</p>
+
+<h2>Requirements</h2>
+<p>
+All you need is a modern R and the <code>rjson</code> package, which is available from CRAN. You also 
+need a network connection, and you need to make sure R can access web sites. Local network policy
+and firewalls may affect this.
+</p>
+
+<h2>Usage</h2>
+<p>
+Functions defined here closely follow the names and parameters of WebServices defined in 
+<a href="http://www.geonames.org/export/ws-overview.html">GeoNames' WebServices Overview</a>. 
+The aim is to implement all JSON-enabled web services defined there.
+</p>
+<p>
+Select the web service you want to call, and check its documentation. To translate into an
+R geonames package function, just prefix 'GN' to the name, remove the 'JSON' part, and put named parameters in the 
+function call. 
+</p>
+
+<h3>Examples</h3>
+<ul>
+
+<li>Timezone query:
+<pre>
+> GNtimezone(lat=-34.576,lng=-58.40881)
+              time countryName rawOffset dstOffset countryCode gmtOffset
+1 2008-10-15 12:39   Argentina        -3        -3          AR        -2
+        lng                     timezoneId     lat
+1 -58.40881 America/Argentina/Buenos_Aires -34.576
+</pre>
+</li>
+<li>Cities query:
+<pre>
+> GNcities(north=-44.1,south=-9.9,east=-22,4,west=55.2,lang="de")
+                      fcodeName countrycode fcl           fclName         name
+1 capital of a political entity          AR   P city, village,... Buenos Aires
+2 capital of a political entity          PE   P city, village,...         Lima
+3 capital of a political entity          CL   P city, village,...     Santiago
+4 capital of a political entity          BR   P city, village,...     Brasília
+                                wikipedia       lng fcode geonameId       lat
+1      de.wikipedia.org/wiki/Buenos_Aires -58.40881  PPLC   3435910 -34.57613
+2              de.wikipedia.org/wiki/Lima -77.05000  PPLC   3936456 -12.05000
+3 de.wikipedia.org/wiki/Santiago_de_Chile -70.66667  PPLC   3871336 -33.45000
+4     de.wikipedia.org/wiki/Bras%C3%ADlia -47.92972  PPLC   3469058 -15.77972
+  population
+1   13076300
+2    7737002
+3    4837295
+4    2207718
+</pre>
+</li>
+
+<li>Weather query:
+<pre>
+> GNweatherIcao(ICAO="LSZH")
+      clouds weatherCondition
+1 few clouds              n/a
+                                                 observation windDirection ICAO
+1 LSZH 151320Z 25004KT 230V290 9999 FEW030 20/13 Q1019 NOSIG           250 LSZH
+  elevation countryCode      lng temperature dewPoint windSpeed humidity
+1       432          CH 8.516667          20       13        04       64
+    stationName            datetime      lat hectoPascAltimeter
+1 Zurich-Kloten 2008-10-15 13:20:00 47.46667               1019
+</pre>
+</li>
+</ul>
+
+<h2>Parameter Names</h2>
+<p>
+Note that for the simplest functions there are defaults and named formal parameters. For more complex
+web service calls the function just has a <code>...</code> parameter and the user has to supply a set
+of <code>name=value</code> pairs that make sense for the web service. I recommend you always use named
+parameters when you call these functions, even when calling something like <code>GNtimezone</code>
+which is defined with names so you can at the moment do <code>GNtimezone(54,23)</code>. I might get
+rid of this and enforce calls to be of the form <code>GNtimezone(lat=54,lng=23)</code> in the future.
+</p>
+
+<h2>Returned Values</h2>
+<p>
+The functions generally return data frames with a row for each entry and columns named as in the web service specification. Sometimes each returned value in a query has a different set of properties, and in this case the data frame will have all the property names for columns, but NA values in the inappropriate entries.
+</p>
+
+<h2>Errors</h2>
+<p>
+If the web service call fails then an error message is returned and reported. The text for these
+messages is coded into the package. If the Geonames people change or extende these codes then you
+will probably be better off looking them up on their web site.
+</p>
+
 
 <p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
 
