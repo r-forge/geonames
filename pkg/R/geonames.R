@@ -41,21 +41,19 @@ getJson=function(name,plist){
   return(data)
 }
 
-gnXML=function(name){
- require(utils)
- url=paste("http://ws.geonames.org/",name,sep="")
- u=url(url,open="r")
- d=readLines(u)
- close(u)
- return(d)
-}
 
 gnDataFrame=function(name,params,ename){
 #
 # return a data frame constructed from a JSON call
 # 
- json = getJson(name,params)
-  return(as.data.frame(do.call("rbind",json[[ename]])))
+
+  return(gnRaggedDataFrame(name,params,ename))
+###
+### this code tried to be more efficient but each column was a list.
+### eventually I'll figure out a better way to construct a data frame, until then
+### i'll just use the ragged version.
+#  json = getJson(name,params)
+#  return(as.data.frame(do.call("rbind",json[[ename]])))
 }
 
 gnRaggedDataFrame=function(name,params,ename){
@@ -184,29 +182,9 @@ GNpostalCodeSearch=function(...){
 
 GNpostalCodeCountryInfo=function(){
 #
-# uses a naive xml parser because there's no JSON version
-#
-  xml = gnXML("postalCodeCountryInfo")
-  pci = matrix(ncol=5)
-  c=3
-  ncs = length(xml)/7
-  for(i in 1:ncs){
-    for(j in 1:7){
-    item = c(
-      gnParseXML(xml[c+1],"countryCode"),
-      gnParseXML(xml[c+2],"countryName"),
-      gnParseXML(xml[c+3],"numPostalCodes"),
-      gnParseXML(xml[c+4],"minPostalCode"),
-      gnParseXML(xml[c+5],"maxPostalCode")
-      )
-    }
-    pci=rbind(pci,item)
-    c=c+7
-  }
-  pci=data.frame(pci)
-  names(pci)=c("countryCode","countryName","numPostalCodes","minPostalCodes","maxPostalCodes")
-  pci=pci[-1,]
-  return(pci)
+### now uses the JSON version - used to parse XML here!
+###
+  return(gnRaggedDataFrame("postalCodeCountryInfoJSON",list(),"geonames"))
 }
 
 
@@ -269,13 +247,6 @@ GNwikipediaSearch=function(q,maxRows=10){
   return(gnRaggedDataFrame("wikipediaSearchJSON",list(q=q,maxRows=maxRows),"geonames"))
 }
 
-
-gnParseXML=function(x,tag){
-#
-# naive xml parser - only works with "<foo>data</foo>" form data.
-# It's either this or require(XML) which is heavyweight...
-  return(sub(paste("</",tag,">",sep=""),"",substr(x,nchar(tag)+3,9999)))
-}
 
 gnerrorCodes = function(){
   errorcodes = list()
