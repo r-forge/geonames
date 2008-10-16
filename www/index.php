@@ -66,6 +66,85 @@ Select the web service you want to call, and check its documentation. To transla
 R geonames package function, just prefix 'GN' to the name, remove the 'JSON' part, and put named parameters in the 
 function call. 
 </p>
+<p>
+For example, let's find the top-level administrative areas of Italy. First you need
+the geoname id code for Italy. The <a href="http://www.geonames.org/export/ws-overview.html">Web Service Overview</a>
+gives us the <code>countryInfo</code> service. The description of that service is given as:
+
+<pre>
+Country Info (Bounding Box, Capital, Area in square km, Population)
+Webservice Type : REST
+Url : ws.geonames.org/countryInfo?
+Parameters : country (default = all countries)
+lang : ISO-639-1 language code (en,de,fr,it,es,...) (default = english)
+Result : Country information : Capital, Population, Area in square km, Bounding Box of mainland
+Example : http://ws.geonames.org/countryInfo?
+</pre> 
+
+<p>
+We can then call this from R with <code>GNcountryInfo(country="IT")</code>. Note that the function name has <code>GN</code>
+prefixed to the web service name, and that the parameter is named the same as the parameter description above.
+<pre>
+> GNcountryInfo(country="IT")
+  countryName bBoxWest currencyCode fipsCode countryCode isoNumeric capital areaInSqKm            languages
+1       Italy 6.614888          EUR       IT          IT        380    Rome   301230.0 it-IT,de-IT,fr-IT,sl
+  bBoxEast isoAlpha3 continent bBoxNorth geonameId bBoxSouth population
+1 18.51345       ITA        EU   47.0952   3175395  36.65277   58145000
+</pre>
+</p>
+
+<p>
+This gives us the <code>geonameId</code> of 3175395 for Italy. We want to find the administrative areas, and this
+  is done with the <code>children</code> web service:
+<pre>
+Children
+
+Returns the children for a given geonameId. The children are the
+administrative divisions within an other administrative division. Like
+the counties (ADM2) in a state (ADM1) or also the countries in a
+continent.
+
+Webservice Type : XML or JSON
+Url : ws.geonames.org/children?
+ws.geonames.org/childrenJSON?
+Parameters :
+geonameId : the geonameId of the parent
+Result : returns a list of GeoName records
+
+Example, regions of Italy:
+http://ws.geonames.org/children?geonameId=3175395 
+</pre>
+</p>
+<p>
+So in R this becomes <code>itadm1=GNchildren(geonameId=3175395)</code>. Now we can investigate the returned value:
+<pre>
+> itadm1$name
+ [1] "Abruzzo"                "Aosta Valley"           "Apulia"                 "Basilicate"            
+ [5] "Calabria"               "Campania"               "Friuli"                 "Latium"                
+ [9] "Liguria"                "Lombardy"               "Piedmont"               "Regione Emilia-Romagna"
+[13] "Regione Molise"         "Sardinia"               "Sicily"                 "The Marches"           
+[17] "Trentino-Alto Adige"    "Tuscany"                "Umbria"                 "Veneto"                
+> 
+</pre>
+</p>
+<p>
+We can also get these names in Italian, by adding <code>lang="IT"</code> to the call. Note that this isn't
+documented in the geonames documents. 
+<pre>
+> GNchildren(geonameId=3175396,lang="IT")$name
+ [1] "Regione Abruzzo"                        "Regione Autonoma Friuli Venezia Giulia"
+ [3] "Regione Autonoma Siciliana"             "Regione Autonoma Trentino-Alto Adige"  
+ [5] "Regione Autonoma Valle d'Aosta"         "Regione Autonoma della Sardegna"       
+ [7] "Regione Basilicata"                     "Regione Calabria"                      
+ [9] "Regione Campania"                       "Regione Emilia-Romagna"                
+[11] "Regione Lazio"                          "Regione Liguria"                       
+[13] "Regione Lombardia"                      "Regione Marche"                        
+[15] "Regione Molise"                         "Regione Piemonte"                      
+[17] "Regione Puglia"                         "Regione Umbria"                        
+[19] "Regione del Veneto"                     "Tuscany"             
+</pre>
+</p>
+
 
 <h3>Examples</h3>
 <ul>
