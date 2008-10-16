@@ -1,8 +1,8 @@
 Package: geonames
 Type: Package
 Title: Interface to www.geonames.org web service
-Version: 0.6
-Date: 2008-10-10
+Version: 0.7
+Date: 2008-10-16
 Author: Barry Rowlingson
 Maintainer: Barry Rowlingson <barry.rowlingson@gmail.com>
 Depends: R (>= 2.2.0), rjson
