@@ -19,6 +19,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><?php echo $group_name; ?></title>
 	<link href="<?php echo $themeroot; ?>styles/estilo1.css" rel="stylesheet" type="text/css" />
+	<link href="style.css" rel="stylesheet" type="text/css" />
   </head>
 
 <body>
@@ -71,7 +72,7 @@ For example, let's find the top-level administrative areas of Italy. First you n
 the geoname id code for Italy. The <a href="http://www.geonames.org/export/ws-overview.html">Web Service Overview</a>
 gives us the <code>countryInfo</code> service. The description of that service is given as:
 
-<pre>
+<pre class="geonames">
 Country Info (Bounding Box, Capital, Area in square km, Population)
 Webservice Type : REST
 Url : ws.geonames.org/countryInfo?
@@ -84,7 +85,7 @@ Example : http://ws.geonames.org/countryInfo?
 <p>
 We can then call this from R with <code>GNcountryInfo(country="IT")</code>. Note that the function name has <code>GN</code>
 prefixed to the web service name, and that the parameter is named the same as the parameter description above.
-<pre>
+<pre class="r">
 > GNcountryInfo(country="IT")
   countryName bBoxWest currencyCode fipsCode countryCode isoNumeric capital areaInSqKm            languages
 1       Italy 6.614888          EUR       IT          IT        380    Rome   301230.0 it-IT,de-IT,fr-IT,sl
@@ -96,7 +97,7 @@ prefixed to the web service name, and that the parameter is named the same as th
 <p>
 This gives us the <code>geonameId</code> of 3175395 for Italy. We want to find the administrative areas, and this
   is done with the <code>children</code> web service:
-<pre>
+<pre class="geonames">
 Children
 
 Returns the children for a given geonameId. The children are the
@@ -117,7 +118,7 @@ http://ws.geonames.org/children?geonameId=3175395
 </p>
 <p>
 So in R this becomes <code>itadm1=GNchildren(geonameId=3175395)</code>. Now we can investigate the returned value:
-<pre>
+<pre class="r">
 > itadm1$name
  [1] "Abruzzo"                "Aosta Valley"           "Apulia"                 "Basilicate"            
  [5] "Calabria"               "Campania"               "Friuli"                 "Latium"                
@@ -129,8 +130,8 @@ So in R this becomes <code>itadm1=GNchildren(geonameId=3175395)</code>. Now we c
 </p>
 <p>
 We can also get these names in Italian, by adding <code>lang="IT"</code> to the call. Note that this isn't
-documented in the geonames documents. 
-<pre>
+documented on the geonames website - I tried it and it worked. 
+<pre class="r">
 > GNchildren(geonameId=3175396,lang="IT")$name
  [1] "Regione Abruzzo"                        "Regione Autonoma Friuli Venezia Giulia"
  [3] "Regione Autonoma Siciliana"             "Regione Autonoma Trentino-Alto Adige"  
@@ -150,7 +151,7 @@ documented in the geonames documents.
 <ul>
 
 <li>Timezone query:
-<pre>
+<pre class="r">
 > GNtimezone(lat=-34.576,lng=-58.40881)
               time countryName rawOffset dstOffset countryCode gmtOffset
 1 2008-10-15 12:39   Argentina        -3        -3          AR        -2
@@ -159,7 +160,7 @@ documented in the geonames documents.
 </pre>
 </li>
 <li>Cities query:
-<pre>
+<pre class="r">
 > GNcities(north=-44.1,south=-9.9,east=-22,4,west=55.2,lang="de")
                       fcodeName countrycode fcl           fclName         name
 1 capital of a political entity          AR   P city, village,... Buenos Aires
@@ -180,7 +181,7 @@ documented in the geonames documents.
 </li>
 
 <li>Weather query:
-<pre>
+<pre class="r">
 > GNweatherIcao(ICAO="LSZH")
       clouds weatherCondition
 1 few clouds              n/a
