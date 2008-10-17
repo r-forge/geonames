@@ -47,13 +47,19 @@ gnDataFrame=function(name,params,ename){
 # return a data frame constructed from a JSON call
 # 
 
-  return(gnRaggedDataFrame(name,params,ename))
 ###
 ### this code tried to be more efficient but each column was a list.
 ### eventually I'll figure out a better way to construct a data frame, until then
 ### i'll just use the ragged version.
 #  json = getJson(name,params)
 #  return(as.data.frame(do.call("rbind",json[[ename]])))
+
+### another poss is:  do.call("rbind",lapply(l,data.frame))
+### but it errors if the data frame is ragged. We could test for this and
+### use gnRaggedDataFrame if it fails
+  
+  return(gnRaggedDataFrame(name,params,ename))
+
 }
 
 gnRaggedDataFrame=function(name,params,ename){

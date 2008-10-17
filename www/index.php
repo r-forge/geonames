@@ -213,7 +213,7 @@ The functions generally return data frames with a row for each entry and columns
 <h2>Errors</h2>
 <p>
 If the web service call fails then an error message is returned and reported. The text for these
-messages is coded into the package. If the Geonames people change or extende these codes then you
+messages is coded into the package. If the Geonames people change or extend these codes then you
 will probably be better off looking them up on their web site.
 </p>
 
