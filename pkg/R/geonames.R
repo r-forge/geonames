@@ -83,22 +83,22 @@ gnRaggedDataFrame=function(name,params,ename){
 ## admin hierarchy structures
 ## 
 
-GNchildren=function(...){
+GNchildren=function(geonameId,...){
 # allows name, lang, others?
-  return(gnDataFrame("childrenJSON",list(...),"geonames"))
+  return(gnDataFrame("childrenJSON",list(geonameId=geonameId,...),"geonames"))
 }
 
-GNhierarchy=function(...){
-  return(gnRaggedDataFrame("hierarchyJSON",list(...),"geonames"))
+GNhierarchy=function(geonameId,...){
+  return(gnRaggedDataFrame("hierarchyJSON",list(geonameId=geonameId,...),"geonames"))
 }
 
-GNsiblings=function(...){
-  return(gnDataFrame("siblingsJSON",list(...),"geonames"))
+GNsiblings=function(geonameId,...){
+  return(gnDataFrame("siblingsJSON",list(geonameId=geonameId,...),"geonames"))
 }
 
-GNneighbours=function(...){
+GNneighbours=function(geonameId,...){
 # works for countries only
-  return(gnDataFrame("neighboursJSON",list(...),"geonames"))
+  return(gnDataFrame("neighboursJSON",list(geonameId=geonameId,...),"geonames"))
 }
 
 GNcountrySubdivision=function(lat,lng,lang="en",radius="",maxRows=10){
