@@ -205,6 +205,50 @@ which is defined with names so you can at the moment do <code>GNtimezone(54,23)<
 rid of this and enforce calls to be of the form <code>GNtimezone(lat=54,lng=23)</code> in the future.
 </p>
 
+<h2>Further examples</h2>
+<p>
+The following examples are included in the file <code>testing.R</code> in the <code>tests</code> subdirectory. These tests are not run during install or check.
+</p>
+<pre class="r">
+> file.show(file.path(system.file(package="geonames"),"tests","testing.R"))
+
+GNchildren(3175395)
+
+GNcities(north=44.1,south=-9.9,east=-22.4,west=55.2,lang="de")
+
+GNcountryCode(lat=47.03,lng=10.2)
+
+GNcountryInfo()
+GNcountryInfo("DE")
+
+
+GNearthquakes(north=44.1,south=-9.9,east=-22.4,west=55.2)
+
+GNfindNearByWeather(57,-2)
+
+GNfindNearbyStreets(37.45,-122.18)
+
+GNwikipediaSearch("london")
+GNfindNearbyWikipedia(postalcode=8775,country="CH",radius=10)
+GNwikipediaBoundingBox(north=44.1,south=-9.9,east=-22.4,west=55.2)
+
+GNtimezone(57.01,-2)
+
+GNfindNearbyPostalCodes(lat=47,lng=9)
+GNpostalCodeSearch(postalcode=90210,country="FI")
+GNpostalCodeSearch(postalcode=90210,country="US")
+GNpostalCodeLookup(postalcode="LA1",country="UK")
+GNpostalCodeLookup(postalcode="90210")
+
+GNsearch(q="london",maxRows=10)
+
+GNneighbours(3041565)
+
+GNneighbourhood(40.7834,-73.96625)
+GNpostalCodeCountryInfo()
+
+</pre>
+
 <h2>Returned Values</h2>
 <p>
 The functions generally return data frames with a row for each entry and columns named as in the web service specification. Sometimes each returned value in a query has a different set of properties, and in this case the data frame will have all the property names for columns, but NA values in the inappropriate entries.
