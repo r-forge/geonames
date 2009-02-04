@@ -260,7 +260,13 @@ If the web service call fails then an error message is returned and reported. Th
 messages is coded into the package. If the Geonames people change or extend these codes then you
 will probably be better off looking them up on their web site.
 </p>
-
+<p>
+Sometimes the geonames people will change the hostname. This can be changed in the package with the R
+"options" function:
+<pre class="r">
+options(geonamesHost="ws5.geonames.org")
+</pre>
+</p>
 
 <p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
 
