@@ -14,6 +14,12 @@
 ##     You should have received a copy of the GNU General Public License
 ##     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+.onLoad = function(libname,pkgname){
+  ## sometimes they take this down and change it...
+  if(is.null(options()$geonamesHost)){
+    options(geonamesHost="ws.geonames.org")
+  }
+}
 
 ##
 ## useful functions
@@ -25,7 +31,7 @@ getJson=function(name,plist){
 #
   require(rjson)
   require(utils)
-  url=paste("http://ws.geonames.org/",name,"?",sep="")
+  url=paste("http://",options()$geonamesHost,"/",name,"?",sep="")
   for(p in names(plist)){
     plist[[p]]=paste(p,"=",URLencode(as.character(plist[[p]])),sep="")
   }
