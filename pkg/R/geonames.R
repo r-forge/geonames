@@ -159,8 +159,8 @@ GNfindNearby=function(...){
   return(getJson("findNearbyJSON",list(...)))
 }
 
-GNfindNearbyPlaceName=function(lat,lng,radius="",maxRows="",style="MEDIUM"){
-  return(gnDataFrame("findNearbyPlaceNameJSON",list(lat=lat,lng=lng,radius=radius,style=style),"geonames"))
+GNfindNearbyPlaceName=function(lat,lng,radius="",maxRows="10",style="MEDIUM"){
+  return(gnDataFrame("findNearbyPlaceNameJSON",list(lat=lat,lng=lng,radius=radius,style=style,maxRows=maxRows),"geonames"))
 }
 
 GNfindNearbyStreets=function(lat,lng){
