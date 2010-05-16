@@ -19,6 +19,9 @@
   if(is.null(options()$geonamesHost)){
     options(geonamesHost="ws.geonames.org")
   }
+  if(is.null(options()$geonamesUsername)){
+    warning("No geonamesUsername set. See http://geonames.wordpress.com/2010/03/16/ddos-part-ii/ and set one with options(geonamesUsername=\"foo\") for some services to work")
+  }
 }
 
 ##
@@ -32,13 +35,16 @@ getJson=function(name,plist){
   require(rjson)
   require(utils)
   url=paste("http://",options()$geonamesHost,"/",name,"?",sep="")
+  if(!is.null(options()$geonamesUsername)){
+    plist[["username"]]=options()$geonamesUsername
+  }
   for(p in names(plist)){
     plist[[p]]=paste(p,"=",URLencode(as.character(plist[[p]])),sep="")
   }
   pstring=paste(unlist(plist),collapse="&")
   url=paste(url,pstring,sep='')  
   u=url(url,open="r")
-  d=readLines(u)
+  d=readLines(u,warn=FALSE)
   close(u)
   data = fromJSON(d)
   if(length(data$status)>0){
