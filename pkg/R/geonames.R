@@ -82,15 +82,15 @@ gnRaggedDataFrame=function(name,params,ename){
   json = getJson(name,params)[[ename]]
   names=NULL
   for(j in json){
-    names=unique(c(names,names(j)))
+    names=unique(c(names,names(unlist(j))))
   }
 
   m=data.frame(matrix(NA,ncol=length(names),nrow=length(json)))
   names(m) = names
   row=1
   for(j in json){
-    for(ename in names(j)){
-       m[row,ename]=j[[ename]]
+    for(ename in names(unlist(j))){
+       m[row,ename]=unlist(j)[[ename]]
     }
     row=row+1
   }
