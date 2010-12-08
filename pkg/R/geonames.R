@@ -142,8 +142,8 @@ GNcities=function(north,east,south,west,lang="en",maxRows=10){
   return(gnDataFrame("citiesJSON",list(north=north,east=east,west=west,south=south,lang=lang,maxRows=maxRows),"geonames"))
 }
 
-GNtimezone=function(lat,lng){
-  return(as.data.frame(getJson("timezoneJSON",list(lat=lat,lng=lng))))
+GNtimezone=function(lat,lng, radius=0){
+  return(as.data.frame(getJson("timezoneJSON",list(lat=lat,lng=lng, radius=0))))
 }
 
 

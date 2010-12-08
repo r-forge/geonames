@@ -15,7 +15,7 @@
 GNcountryCode(lat,lng,lang,radius)
 GNcountryInfo(country,lang)
 GNcities(north,east,south,west,lang,maxRows)
-GNtimezone(lat,lng)
+GNtimezone(lat,lng,radius)
 }
 
 \arguments{
