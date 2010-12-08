@@ -5,10 +5,10 @@
 \alias{GNweatherIcao}
 \alias{GNearthquakes}
 
-\title{Topographic queries}
+\title{Environmental queries}
 
 \description{
- Get topographic (height) information.
+ General environmental information
 }
 
 \usage{

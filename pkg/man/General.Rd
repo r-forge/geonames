@@ -8,7 +8,7 @@
 \title{General Queries}
 
 \description{
- Get topographic (height) information.
+ Query codes and timezones
 }
 
 \usage{
