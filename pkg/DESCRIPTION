@@ -9,4 +9,4 @@ Depends: R (>= 2.2.0), rjson
 Description: Code for querying the web service at www.geonames.org
 License: GPL-3
 LazyLoad: yes
-
+BugReports: https://r-forge.r-project.org/tracker/?group_id=271
