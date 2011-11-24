@@ -38,10 +38,11 @@ getJson=function(name,plist){
   if(!is.null(options()$geonamesUsername)){
     plist[["username"]]=options()$geonamesUsername
   }
-  for(p in names(plist)){
-    plist[[p]]=paste(p,"=",URLencode(as.character(plist[[p]])),sep="")
+  olist = list()
+  for(p in 1:length(plist)){
+    olist[[p]]=paste(names(plist)[p],"=",URLencode(as.character(plist[[p]])),sep="")
   }
-  pstring=paste(unlist(plist),collapse="&")
+  pstring=paste(unlist(olist),collapse="&")
   url=paste(url,pstring,sep='')  
   u=url(url,open="r")
   d=readLines(u,warn=FALSE)
